@@ -51,32 +51,36 @@ int main(void)
 {
     struct display display;
 
-    int mx[6 * 6] = {
-        1, 1, 1, 1, 1, 1,
-        1, 0, 0, 0, 0, 1,
-        1, 0, 1, 1, 0, 1,
-        1, 0, 0, 0, 0, 1,
-        1, 1, 0, 1, 0, 1,
-        1, 1, 1, 1, 1, 1,
+    int mx[15 * 10] = {
+        1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 0, 0, 1, 0, 0, 1, 1, 0 ,0, 0, 0, 0, 1, 1,
+        1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1,
+        1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1,
+        1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
+        1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,
+        1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1,
+        1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
     };
     display.map     = &mx[0];
-    display.width     = 6;
-    display.height    = 6;
-    display.tile_size = 100;
+    display.width     = 15;
+    display.height    = 10;
+    display.tile_size = 50;
+
     display.xmax      = display.width * display.tile_size;
     display.ymax      = display.height * display.tile_size;
-    display.floor = BLACK;
-    display.wall = WHITE;
-    display.pixel = WHITE;
+    display.floor = WHITE;
+    display.wall = BLACK;
+    display.pixel = BLACK;
     display.walk = 5;
     display.ds_win = bunny_start(display.xmax, display.ymax, false, "fl: tp event");
     display.ds_px = bunny_new_pixelarray(display.xmax, display.ymax);
     stu_clear_pixelarray(display.ds_px, display.floor);
     blit_at_origin(&display);
-    display.player.x = 250;
-    display.player.y = 250;
-    display.wallpx.x = 0;
-    display.wallpx.y = 0;
+    clear_pixelwall(&display);
+    display.player.x = 275;
+    display.player.y = 25;
     bunny_set_key_response(key_event);
     bunny_loop(display.ds_win, 30, &display);
     bunny_stop(display.ds_win);

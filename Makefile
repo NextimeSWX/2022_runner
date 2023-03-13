@@ -13,7 +13,8 @@ SRCS	=	src/runner.c		\
 		src/Z_key.c		\
 		src/S_key.c		\
 		src/Q_key.c		\
-		src/D_key.c
+		src/D_key.c		\
+		src/wall.c
 
 OBJS	=	$(SRCS:.c=.o)
 

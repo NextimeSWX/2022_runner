@@ -17,7 +17,7 @@ int Z_key(struct display *ds)
         ds->player.y -= 1;
         i += 1;
     }
-    if ( get_position(ds, ds->player) == 1) {
+    if (get_position(ds, ds->player) == 1) {
         ds->player.y += 1;
     }
     return (0);

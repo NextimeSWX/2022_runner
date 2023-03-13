@@ -18,7 +18,6 @@ struct display {
     t_bunny_window *ds_win;
     t_bunny_pixelarray *ds_px;
     t_bunny_position player;
-    t_bunny_position wallpx;
     int tile_size;
     int walk;
     int width;
@@ -33,6 +32,7 @@ struct display {
 
 typedef t_bunny_accurate_position t_accurate_pos;
 
+int clear_pixelwall(struct display *ds);
 int get_position(struct display *data, t_bunny_position position);
 int Z_key(struct display *data);
 int S_key(struct display *data);
