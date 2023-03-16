@@ -14,10 +14,12 @@
 #include <assert.h>
 #include <stdlib.h>
 
+typedef t_bunny_accurate_position t_accurate_pos;
+
 struct display {
     t_bunny_window *ds_win;
     t_bunny_pixelarray *ds_px;
-    t_bunny_position player;
+    t_accurate_pos *player;
     int tile_size;
     int walk;
     int width;
@@ -28,17 +30,21 @@ struct display {
     int pixel;
     int xmax;
     int ymax;
+    int angle;
 };
 
-typedef t_bunny_accurate_position t_accurate_pos;
-
 int clear_pixelwall(struct display *ds);
-int get_position(struct display *data, t_bunny_position position);
-int Z_key(struct display *data);
-int S_key(struct display *data);
-int Q_key(struct display *data);
-int D_key(struct display *data);
+int get_position(struct display *data, t_accurate_pos position);
+int z_key(struct display *data);
+int s_key(struct display *data);
+int q_key(struct display *data);
+int d_key(struct display *data);
+int left_key(struct display *data);
+int right_key(struct display *data);
 void stu_clear_pixelarray(t_bunny_pixelarray *pxa, unsigned int color);
 void put_pixel(t_bunny_position *, t_bunny_pixelarray *px, unsigned int color);
+t_accurate_pos move_forward(const t_accurate_pos *start, double angle, double len);
+double deg_to_rads(int degrees);
+t_bunny_position pos_from_accurate(const t_accurate_pos *conv);
 
 #endif

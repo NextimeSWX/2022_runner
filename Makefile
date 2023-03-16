@@ -10,11 +10,16 @@ SRCS	=	src/runner.c		\
 		src/put_pixel.c		\
 		src/clear_pixelarray.c	\
 		src/position.c		\
-		src/Z_key.c		\
-		src/S_key.c		\
-		src/Q_key.c		\
-		src/D_key.c		\
-		src/wall.c
+		src/z_key.c		\
+		src/s_key.c		\
+		src/q_key.c		\
+		src/d_key.c		\
+		src/left_key.c		\
+		src/right_key.c		\
+		src/wall.c		\
+		src/move_forward.c	\
+		src/deg_to_rads.c	\
+		src/pos_from_accurate.c
 
 OBJS	=	$(SRCS:.c=.o)
 
