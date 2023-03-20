@@ -19,7 +19,7 @@ typedef t_bunny_accurate_position t_accurate_pos;
 struct display {
     t_bunny_window *ds_win;
     t_bunny_pixelarray *ds_px;
-    t_accurate_pos *player;
+    t_accurate_pos player;
     int tile_size;
     int walk;
     int width;

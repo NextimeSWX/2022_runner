@@ -10,14 +10,16 @@
 
 int clear_pixelwall(struct display *ds)
 {
-    t_bunny_position wallpx;
+    t_bunny_accurate_position wallpx;
+    t_bunny_position tmp;
 
     wallpx.x = 0;
     wallpx.y = 0;
+    tmp = pos_from_accurate(&wallpx);
     while (wallpx.y <= ds->ymax) {
         while (wallpx.x < ds->xmax) {
             if (get_position(ds, wallpx) == 1) {
-                put_pixel(&wallpx, ds->ds_px, ds->wall);
+                put_pixel(&tmp, ds->ds_px, ds->wall);
             }
             wallpx.x += 1;
         }

@@ -27,7 +27,7 @@ t_bunny_response key_event(t_bunny_event_state state,
     t_bunny_position tmp;
 
     ds = data;
-    tmp = pos_from_accurate(ds->player);
+    tmp = pos_from_accurate(&ds->player);
     put_pixel(&tmp, ds->ds_px, WHITE);
     if (state == GO_UP)
         return (GO_ON);
@@ -102,10 +102,11 @@ int main(void)
     display.ds_win = bunny_start(display.xmax, display.ymax, false, "fl: tp event");
     display.ds_px = bunny_new_pixelarray(display.xmax, display.ymax);
     stu_clear_pixelarray(display.ds_px, display.floor);
+    display.player.x = 275;
+    display.player.y = 25;
     blit_at_origin(&display);
     clear_pixelwall(&display);
-    display.player->x = 275;
-    display.player->y = 25;
+
     bunny_set_key_response(key_event);
     bunny_loop(display.ds_win, 30, &display);
     bunny_stop(display.ds_win);

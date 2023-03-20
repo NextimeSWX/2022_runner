@@ -13,12 +13,12 @@ int d_key(struct display *ds)
     int i;
 
     i = 0;
-    while (i < ds->walk && get_position(ds, *ds->player) != 1) {
-        *ds->player = move_forward(ds->player, ds->angle + 90, 1);
+    while (i < ds->walk && get_position(ds, ds->player) != 1) {
+        ds->player = move_forward(&ds->player, ds->angle + 90, 1);
         i += 1;
     }
-    if ( get_position(ds, *ds->player) == 1) {
-        *ds->player = move_forward(ds->player, ds->angle + 90, 1);
+    if ( get_position(ds, ds->player) == 1) {
+        ds->player = move_forward(&ds->player, ds->angle + 90, 1);
     }
     return (0);
 }
