@@ -1,4 +1,4 @@
-/*
+ /*
  * E89 Pedagogical & Technical Lab
  * project:     tp_sphere
  * created on:  2023-01-12 - 09:56 +0100
@@ -6,7 +6,7 @@
  * description: deg_to_rads.c
  */
 
-#include <math.h>
+#include "stu.h"
 
 double deg_to_rads(int degrees)
 {

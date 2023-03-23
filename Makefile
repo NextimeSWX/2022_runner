@@ -8,7 +8,6 @@ NAME	=	runner
 
 SRCS	=	src/runner.c		\
 		src/put_pixel.c		\
-		src/clear_pixelarray.c	\
 		src/position.c		\
 		src/z_key.c		\
 		src/s_key.c		\
@@ -30,7 +29,6 @@ LDFLAGS	+=	-llapin -lsfml-graphics -lsfml-window -lsfml-system -lstdc++ -lm
 RM	=	rm -vf
 
 CC	:=	gcc
-
 
 ifdef RELEASE
 CFLAGS += -O2

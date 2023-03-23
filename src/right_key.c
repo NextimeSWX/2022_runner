@@ -8,8 +8,7 @@
 
 #include "stu.h"
 
-int right_key(struct display *ds)
+void right_key(struct display *ds)
 {
     ds->angle += 45;
-    return (0);
 }

@@ -8,18 +8,16 @@
 
 #include "stu.h"
 
-int z_key(struct display *ds)
+void z_key(struct display *ds)
 {
-    int i;
+    double rad;
 
-    i = 0;
-    while (i <= ds->walk && get_position(ds, ds->player) != 1) {
-        ds->player = move_forward(&ds->player, ds->angle, 1);
-        i += 1;
+    rad = deg_to_rads(ds->angle);
+    while (get_position(ds, ds->player) != 1) {
+        ds->player = move_forward(&ds->player, rad, ds->walk);
     }
-    if (get_position(ds, ds->player) == 1) {
-        ds->player = move_forward(&ds->player, ds->angle, 1);
+    while (get_position(ds, ds->player) == 1) {
+        ds->player = move_forward(&ds->player, (rad - M_PI), 1);
     }
-    return (0);
 }
 

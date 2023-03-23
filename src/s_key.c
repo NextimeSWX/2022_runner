@@ -8,18 +8,15 @@
 
 #include "stu.h"
 
-int s_key(struct display *ds)
+void s_key(struct display *ds)
 {
-    int i;
+    double rad;
 
-    i = 0;
-    while (i <= ds->walk && get_position(ds, ds->player) != 1) {
-        ds->player = move_forward(&ds->player, ds->angle - 180, 1);
-        i += 1;
+    rad = deg_to_rads(ds->angle - 180);
+    while (get_position(ds, ds->player) != 1) {
+        ds->player = move_forward(&ds->player, rad, ds->walk);
     }
-    if ( get_position(ds, ds->player) == 1) {
-        ds->player = move_forward(&ds->player, ds->angle - 180, 1);
+        while (get_position(ds, ds->player) == 1) {
+        ds->player = move_forward(&ds->player, (rad - M_PI), 1);
     }
-    return (0);
 }
-

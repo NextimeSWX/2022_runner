@@ -33,14 +33,14 @@ struct display {
     int angle;
 };
 
-int clear_pixelwall(struct display *ds);
-int get_position(struct display *data, t_accurate_pos position);
-int z_key(struct display *data);
-int s_key(struct display *data);
-int q_key(struct display *data);
-int d_key(struct display *data);
-int left_key(struct display *data);
-int right_key(struct display *data);
+int draw_wall(struct display *ds);
+int  get_position(struct display *data, t_accurate_pos position);
+void z_key(struct display *data);
+void s_key(struct display *data);
+void q_key(struct display *data);
+void d_key(struct display *data);
+void left_key(struct display *data);
+void right_key(struct display *data);
 void stu_clear_pixelarray(t_bunny_pixelarray *pxa, unsigned int color);
 void put_pixel(t_bunny_position *, t_bunny_pixelarray *px, unsigned int color);
 t_accurate_pos move_forward(const t_accurate_pos *start, double angle, double len);

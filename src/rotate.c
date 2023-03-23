@@ -22,10 +22,10 @@ t_bunny_response key_rotate(t_bunny_event_state state,
         return (EXIT_ON_SUCCESS);
 
     if (keycode == BKS_A) {
-        LEFT_key(ds);
+        left_key(ds);
     }
     else if (keycode == BKS_E) {
-        RIGHT_key(ds);
+        right_key(ds);
     }
     return (GO_ON);
 }
