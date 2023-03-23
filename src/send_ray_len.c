@@ -8,7 +8,7 @@
 
 #include "stu.h"
 
-t_accurate_pos send_ray(struct display *map,
+int send_ray_len(struct display *map,
                         const t_accurate_pos *start,
                         double angle)
 {
@@ -21,7 +21,7 @@ t_accurate_pos send_ray(struct display *map,
     tile = convert(map, &pos);
     i = 0;
     if (map->map[tile] == 1) {
-        return (pos);
+        return (i);
     }
     else {
         while (map->map[tile] == 0
@@ -36,6 +36,12 @@ t_accurate_pos send_ray(struct display *map,
             tile = convert(map, &pos);
             i -= 0.01;
         }
+    t_bunny_position posi;
+
+    pos = send_ray(map,start,angle);
+    posi = pos_from_accurate(&pos);
+    put_pixel(&posi,map->ds_px, RED);
     }
-    return (pos);
+    return (i);
 }
+

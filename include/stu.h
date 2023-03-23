@@ -34,17 +34,22 @@ struct display {
 };
 
 int draw_wall(struct display *ds);
-int  get_position(struct display *data, t_accurate_pos position);
+int  get_position(struct display *data, t_bunny_position position);
 void z_key(struct display *data);
 void s_key(struct display *data);
 void q_key(struct display *data);
 void d_key(struct display *data);
 void left_key(struct display *data);
 void right_key(struct display *data);
-void stu_clear_pixelarray(t_bunny_pixelarray *pxa, unsigned int color);
 void put_pixel(t_bunny_position *, t_bunny_pixelarray *px, unsigned int color);
 t_accurate_pos move_forward(const t_accurate_pos *start, double angle, double len);
 double deg_to_rads(int degrees);
 t_bunny_position pos_from_accurate(const t_accurate_pos *conv);
+void draw_impact(struct display *map, t_bunny_pixelarray *pxa,
+                 const t_accurate_pos *start, double angle);
+int send_ray_len(struct display *map, const t_accurate_pos *start, double angle);
+t_accurate_pos send_ray(struct display *map, t_accurate_pos *start, double angle);
+t_accurate_pos move_forward(const t_accurate_pos *start, double angle,double len);
+int convert (struct display *map, t_accurate_pos *pos);
 
 #endif

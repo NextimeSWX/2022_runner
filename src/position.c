@@ -8,7 +8,7 @@
 
 #include "stu.h"
 
-int get_position(struct display *ds, t_bunny_accurate_position pos)
+int get_position(struct display *ds, t_bunny_position pos)
 {
     int position;
 

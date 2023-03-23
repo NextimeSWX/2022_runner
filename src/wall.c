@@ -20,21 +20,18 @@ static void blit_at_origin(struct display *ds)
 
 int draw_wall(struct display *ds)
 {
-    t_bunny_accurate_position wallpx;
-    t_bunny_positioget_position tmp;
+    t_bunny_position wallpx;
+    //    t_bunny_position tmp;
 
     wallpx.x = 0;
     wallpx.y = 0;
     while (wallpx.y <= ds->ymax) {
         while (wallpx.x <= ds->xmax) {
-                printf("%dx\n", tmp.x);
-                printf("%dy\n", tmp.y);
+            //                tmp = pos_from_accurate(&wallpx);
             if (get_position(ds, wallpx) == 1) {
-                tmp = pos_from_accurate(&wallpx);
-                put_pixel(&tmp, ds->ds_px, ds->wall);
+                put_pixel(&wallpx, ds->ds_px, ds->wall);
             } else if (get_position(ds, wallpx) == 0) {
-                tmp = pos_from_accurate(&wallpx);
-                put_pixel(&tmp, ds->ds_px, ds->floor);
+                put_pixel(&wallpx, ds->ds_px, ds->floor);
             }
             wallpx.x += 1;
         }
