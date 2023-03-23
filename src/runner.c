@@ -18,40 +18,47 @@ void blit_at_origin(struct display *ds)
     bunny_display(ds->ds_win);
 }
 
+t_bunny_response loop(void *data)
+{
+    t_bunny_position tmp;
+    struct display *ds;
+    const bool *keys;
+
+    ds   = data;
+    keys = bunny_get_keyboard();
+    send_ray_len(ds, &ds->player, ds->floor);
+    tmp  = pos_from_accurate(&ds->player);
+    put_pixel(&tmp, ds->ds_px, ds->floor);
+    if (keys[BKS_Z])
+        z_key(ds);
+    if (keys[BKS_S])
+        s_key(ds);
+    if (keys[BKS_Q])
+        q_key(ds);
+    else if (keys[BKS_D])
+        d_key(ds);
+    if (keys[BKS_LEFT])
+        left_key(ds);
+    else if (keys[BKS_RIGHT])
+        right_key(ds);
+    send_ray_len(ds, &ds->player, RED);
+    tmp = pos_from_accurate(&ds->player);
+    put_pixel(&tmp, ds->ds_px, ds->pixel);
+    blit_at_origin(ds);
+    return (GO_ON);
+}
+
 t_bunny_response key_event(t_bunny_event_state state,
                            t_bunny_keysym keycode,
                            void *data)
 {
     struct display *ds;
-    t_bunny_position tmp;
 
     ds = data;
-    tmp = pos_from_accurate(&ds->player);
-    put_pixel(&tmp, ds->ds_px, ds->floor);
     if (state == GO_UP)
         return (GO_ON);
     if (keycode == BKS_ESCAPE)
         return (EXIT_ON_SUCCESS);
-    if (keycode == BKS_LEFT) {
-        left_key(ds);
-    }
-    else if (keycode == BKS_RIGHT) {
-        right_key(ds);
-    }
-    if (keycode == BKS_Z) {
-        z_key(ds);
-    }
-    else if (keycode == BKS_S) {
-        s_key(ds);
-    }
-    else if (keycode == BKS_Q) {
-        q_key(ds);
-    }
-    else if (keycode == BKS_D) {
-        d_key(ds);
-    }
-    tmp = pos_from_accurate(&ds->player);
-    put_pixel(&tmp, ds->ds_px, ds->pixel);
     blit_at_origin(ds);
     return (GO_ON);
 }
@@ -73,26 +80,28 @@ int main(void)
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
     };
 
-    display.map     = &mx[0];
+    display.map       = &mx[0];
     display.width     = 15;
     display.height    = 10;
     display.tile_size = 50;
-    display.angle = 90;
+    display.angle     = 90;
 
     display.xmax      = display.width * display.tile_size;
     display.ymax      = display.height * display.tile_size;
-    display.floor = WHITE;
-    display.wall  = BLACK;
-    display.pixel = BLACK;
-    display.walk = 5;
-    display.ds_win = bunny_start(display.xmax, display.ymax, false, "fl: Runner");
-    display.ds_px = bunny_new_pixelarray(display.xmax, display.ymax);
+    display.floor     = WHITE;
+    display.wall      = BLACK;
+    display.pixel     = BLACK;
+    display.walk      = 5;
+    display.ds_win    = bunny_start(display.xmax, display.ymax,
+                                    false, "fl: Runner");
+    display.ds_px     = bunny_new_pixelarray(display.xmax, display.ymax);
+    display.player.x  = 5.5 * display.tile_size;
+    display.player.y  = 0.5 * display.tile_size;
+
     blit_at_origin(&display);
     draw_wall(&display);
-    display.player.x = 275;
-    display.player.y = 25;
-
     bunny_set_key_response(key_event);
+    bunny_set_loop_main_function(loop);
     bunny_loop(display.ds_win, 30, &display);
     bunny_stop(display.ds_win);
 }

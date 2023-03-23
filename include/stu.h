@@ -47,9 +47,8 @@ double deg_to_rads(int degrees);
 t_bunny_position pos_from_accurate(const t_accurate_pos *conv);
 void draw_impact(struct display *map, t_bunny_pixelarray *pxa,
                  const t_accurate_pos *start, double angle);
-int send_ray_len(struct display *map, const t_accurate_pos *start, double angle);
-t_accurate_pos send_ray(struct display *map, t_accurate_pos *start, double angle);
+int send_ray_len(struct display *map, const t_accurate_pos *start, unsigned int color);
+t_accurate_pos send_ray(struct display *map, const t_accurate_pos *start, double angle);
 t_accurate_pos move_forward(const t_accurate_pos *start, double angle,double len);
-int convert (struct display *map, t_accurate_pos *pos);
 
 #endif

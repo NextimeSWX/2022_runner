@@ -9,38 +9,32 @@
 #include "stu.h"
 
 int send_ray_len(struct display *map,
-                        const t_accurate_pos *start,
-                        double angle)
+                 const t_accurate_pos *start,
+                 unsigned int color)
 {
-    t_accurate_pos pos;
-    int tile;
+    t_bunny_accurate_position pos;
+    t_bunny_position tmp;
+    double rad;
     double i;
 
+    i = 0;
     pos.y = start->y;
     pos.x = start->x;
-    tile = convert(map, &pos);
-    i = 0;
-    if (map->map[tile] == 1) {
-        return (i);
+    rad = deg_to_rads(map->angle);
+    tmp = pos_from_accurate(&pos);
+    while (get_position(map, tmp) != 1
+           && pos.x < map->xmax && pos.y < map->ymax) {
+        pos = move_forward(&pos, rad, 0.5);
+        put_pixel(&tmp, map->ds_px, color);
+        tmp = pos_from_accurate(&pos);
+        i += 0.5;
     }
-    else {
-        while (map->map[tile] == 0
-               && pos.x < map->xmax && pos.y < map->ymax) {
-            pos = move_forward(start, angle, i);
-            tile = convert(map, &pos);
-            i += 0.5;
-        }
-        while (map->map[tile] == 1 && pos.x < map->xmax
-               && pos.y < map->ymax) {
-            pos = move_forward(start, angle, i);
-            tile = convert(map, &pos);
-            i -= 0.01;
-        }
-    t_bunny_position posi;
-
-    pos = send_ray(map,start,angle);
-    posi = pos_from_accurate(&pos);
-    put_pixel(&posi,map->ds_px, RED);
+    while (get_position(map, tmp) == 1
+           && pos.x < map->xmax && pos.y < map->ymax) {
+        pos = move_forward(&pos, (rad - M_PI), 0.01);
+        put_pixel(&tmp, map->ds_px, map->wall);
+        tmp = pos_from_accurate(&pos);
+        i -= 0.01;
     }
     return (i);
 }
