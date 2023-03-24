@@ -39,7 +39,7 @@ t_bunny_response loop(void *data)
         left_key(ds);
     else if (keys[BKS_RIGHT])
         right_key(ds);
-    fov(ds, ds->floor);
+    fov(ds);
     send_ray_len(ds, ds->angle, BLUE);
     blit_at_origin(ds);
     return (GO_ON);
@@ -64,23 +64,24 @@ int main(void)
 {
     struct display display;
 
-    int mx[15 * 10] = {
-        1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 0, 0, 1, 0, 0, 1, 1, 0 ,0, 0, 0, 0, 1, 1,
-        1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1,
-        1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1,
-        1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1,
-        1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
-        1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1,
-        1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1,
-        1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
+    int mx[18 * 18] = {
+        1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 0, 0, 1, 0, 0, 1, 1, 0 ,0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1,
+        1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1,
+        1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1,
+        1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+        1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1,
+        1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1,
+        1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     };
 
     display.map       = &mx[0];
-    display.width     = 15;
-    display.height    = 10;
-    display.tile_size = 50;
+    display.width     = 20;
+    display.height    = 11;
+    display.tile_size = 40;
     display.angle     = 90;
     display.fov       = 70 / 2;
 
@@ -91,7 +92,9 @@ int main(void)
     display.pixel     = BLACK;
     display.walk      = 3;
     display.ds_win    = bunny_start(display.xmax, display.ymax,
-                                    false, "fl: Runner");
+                                    false, "fl: Runner mini_map");
+    display.ds_win    = bunny_start(display.xmax, display.ymax,
+                                    false, "fl: Runner 3D");
     display.ds_px     = bunny_new_pixelarray(display.xmax, display.ymax);
     display.player.x  = 5.5 * display.tile_size;
     display.player.y  = 0.5 * display.tile_size;

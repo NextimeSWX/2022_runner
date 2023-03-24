@@ -30,4 +30,3 @@ void send_ray_len(struct display *ds,
         i += 1;
     }
 }
-
