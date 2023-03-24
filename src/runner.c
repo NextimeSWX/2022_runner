@@ -20,15 +20,13 @@ void blit_at_origin(struct display *ds)
 
 t_bunny_response loop(void *data)
 {
-    t_bunny_position tmp;
     struct display *ds;
     const bool *keys;
 
+
     ds   = data;
     keys = bunny_get_keyboard();
-    send_ray_len(ds, &ds->player, ds->floor);
-    tmp  = pos_from_accurate(&ds->player);
-    put_pixel(&tmp, ds->ds_px, ds->floor);
+    send_ray_len(ds, ds->angle, ds->floor);
     if (keys[BKS_Z])
         z_key(ds);
     if (keys[BKS_S])
@@ -41,9 +39,8 @@ t_bunny_response loop(void *data)
         left_key(ds);
     else if (keys[BKS_RIGHT])
         right_key(ds);
-    send_ray_len(ds, &ds->player, RED);
-    tmp = pos_from_accurate(&ds->player);
-    put_pixel(&tmp, ds->ds_px, ds->pixel);
+    fov(ds, ds->floor);
+    send_ray_len(ds, ds->angle, BLUE);
     blit_at_origin(ds);
     return (GO_ON);
 }
@@ -85,13 +82,14 @@ int main(void)
     display.height    = 10;
     display.tile_size = 50;
     display.angle     = 90;
+    display.fov       = 70 / 2;
 
     display.xmax      = display.width * display.tile_size;
     display.ymax      = display.height * display.tile_size;
     display.floor     = WHITE;
     display.wall      = BLACK;
     display.pixel     = BLACK;
-    display.walk      = 5;
+    display.walk      = 3;
     display.ds_win    = bunny_start(display.xmax, display.ymax,
                                     false, "fl: Runner");
     display.ds_px     = bunny_new_pixelarray(display.xmax, display.ymax);

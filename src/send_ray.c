@@ -8,9 +8,8 @@
 
 #include "stu.h"
 
-void send_ray_len(struct display *ds,
-                 float deg,
-                 unsigned int color)
+int send_ray(struct display *ds,
+                 float deg)
 {
     t_bunny_accurate_position pos;
     t_bunny_position tmp;
@@ -18,16 +17,16 @@ void send_ray_len(struct display *ds,
     double i;
 
     i = 0;
-    pos.x = ds->player.x;
     pos.y = ds->player.y;
+    pos.x = ds->player.x;
     rad = deg_to_rads(deg);
     tmp = pos_from_accurate(&pos);
     while (get_position(ds, tmp) != 1
            && pos.x < ds->xmax && pos.y < ds->ymax) {
         pos = move_forward(&pos, rad, 1);
-        put_pixel(&tmp, ds->ds_px, color);
         tmp = pos_from_accurate(&pos);
         i += 1;
     }
+    printf("%f\n", i);
+    return (i);
 }
-

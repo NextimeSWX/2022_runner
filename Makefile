@@ -19,7 +19,11 @@ SRCS	=	src/runner.c		\
 		src/left_key.c		\
 		src/right_key.c		\
 		src/pos_from_accurate.c \
-		src/send_ray_len.c
+		src/send_ray_len.c	\
+		src/send_ray.c		\
+		src/get_ratio.c		\
+		src/get_value.c		\
+		src/fov.c
 
 OBJS	=	$(SRCS:.c=.o)
 

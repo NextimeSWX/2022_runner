@@ -8,7 +8,7 @@
 
 #include "stu.h"
 
-int get_value(int a, int b, float r)
+float get_value(int a, int b, float r)
 {
     float x;
 

@@ -10,6 +10,6 @@
 
 void left_key(struct display *ds)
 {
-    ds->angle -= 10;
+    ds->angle -= 5;
 }
 
