@@ -8,7 +8,7 @@
 
 #include "stu.h"
 
-double deg_to_rads(int degrees)
+double deg_to_rads(double degrees)
 {
     double rad;
 

@@ -15,10 +15,10 @@ void fov(struct display *ds)
 
     i = 0;
     deg = 0;
-     while (i < ds->xmax) {
-         deg = get_value((ds->angle - ds->fov), (ds->angle + ds->fov),
-                         get_ratio(0, ds->xmax, i));
-         send_ray(ds, deg);
-         i += 1;
-     }
+    while (i < ds->xmax) {
+        deg = get_value((ds->angle - ds->fov), (ds->angle + ds->fov),
+                        get_ratio(0, ds->xmax, i));
+        draw_3d(ds, send_ray(ds, deg), i, deg);
+        i += 1;
+    }
 }

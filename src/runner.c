@@ -23,10 +23,9 @@ t_bunny_response loop(void *data)
     struct display *ds;
     const bool *keys;
 
-
     ds   = data;
     keys = bunny_get_keyboard();
-    send_ray_len(ds, ds->angle, ds->floor);
+    //    send_ray_len(ds, ds->angle, ds->floor);
     if (keys[BKS_Z])
         z_key(ds);
     if (keys[BKS_S])
@@ -39,8 +38,13 @@ t_bunny_response loop(void *data)
         left_key(ds);
     else if (keys[BKS_RIGHT])
         right_key(ds);
+    if (keys[BKS_LSHIFT])
+        ds->walk = 4;
+    else {
+        ds->walk = 2;
+    }
     fov(ds);
-    send_ray_len(ds, ds->angle, BLUE);
+    //send_ray_len(ds, ds->angle, BLUE);
     blit_at_origin(ds);
     return (GO_ON);
 }
@@ -64,17 +68,17 @@ int main(void)
 {
     struct display display;
 
-    int mx[18 * 18] = {
+    int mx[20 * 11] = {
         1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         1, 0, 0, 1, 0, 0, 1, 1, 0 ,0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1,
         1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1,
         1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1,
         1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1,
         1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-        1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1,
+        1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1,
         1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1,
-        1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
+        1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1,
+        1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     };
 
@@ -91,18 +95,21 @@ int main(void)
     display.wall      = BLACK;
     display.pixel     = BLACK;
     display.walk      = 3;
+    //display.ds_win    = bunny_start(display.xmax, display.ymax,
+    //                                false, "fl: Runner mini_map");
     display.ds_win    = bunny_start(display.xmax, display.ymax,
-                                    false, "fl: Runner mini_map");
-    display.ds_win    = bunny_start(display.xmax, display.ymax,
-                                    false, "fl: Runner 3D");
-    display.ds_px     = bunny_new_pixelarray(display.xmax, display.ymax);
+                                      false, "fl: Runner 3D");
+//display.ds_px     = bunny_new_pixelarray(display.xmax, display.ymax);
+    display.ds_px   = bunny_new_pixelarray(display.xmax, display.ymax);
     display.player.x  = 5.5 * display.tile_size;
     display.player.y  = 0.5 * display.tile_size;
 
+    //draw_wall(&display);
     blit_at_origin(&display);
-    draw_wall(&display);
     bunny_set_key_response(key_event);
     bunny_set_loop_main_function(loop);
     bunny_loop(display.ds_win, 30, &display);
     bunny_stop(display.ds_win);
+    //bunny_loop(display.ds_win3d, 30, &display);
+    //bunny_stop(display.ds_win3d);
 }

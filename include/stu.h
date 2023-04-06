@@ -20,13 +20,13 @@ struct display {
     t_bunny_window     *ds_win;
     t_bunny_pixelarray *ds_px;
     t_accurate_pos      player;
+    int                 walk;
+    int                *map;
     double              fov;
     float               angle;
     int                 tile_size;
-    int                 walk;
     int                 width;
     int                 height;
-    int                *map;
     int                 wall;
     int                 floor;
     int                 pixel;
@@ -46,7 +46,7 @@ void put_pixel(t_bunny_position *,
                t_bunny_pixelarray *px,unsigned int color);
 t_accurate_pos move_forward(const t_accurate_pos *start,
                             double angle, double len);
-double deg_to_rads(int degrees);
+double deg_to_rads(double degrees);
 t_bunny_position pos_from_accurate(const t_accurate_pos *conv);
 void send_ray_len(struct display *ds, float deg, unsigned int color);
 int send_ray(struct display *ds, float deg);
@@ -55,4 +55,6 @@ t_accurate_pos move_forward(const t_accurate_pos *start,
 float get_ratio(int a, int b, int x);
 float get_value(int a, int b, float r);
 void fov(struct display *ds);
+void draw_3d(struct display *ds, float len, int xpos, double angle);
+
 #endif
