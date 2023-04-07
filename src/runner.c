@@ -25,7 +25,7 @@ t_bunny_response loop(void *data)
 
     ds   = data;
     keys = bunny_get_keyboard();
-    //    send_ray_len(ds, ds->angle, ds->floor);
+    send_ray_len(ds, ds->angle, ds->floor);
     if (keys[BKS_Z])
         z_key(ds);
     if (keys[BKS_S])
@@ -43,8 +43,7 @@ t_bunny_response loop(void *data)
     else {
         ds->walk = 2;
     }
-    fov(ds);
-    //send_ray_len(ds, ds->angle, BLUE);
+    draw(ds);
     blit_at_origin(ds);
     return (GO_ON);
 }
@@ -98,8 +97,8 @@ int main(void)
     //display.ds_win    = bunny_start(display.xmax, display.ymax,
     //                                false, "fl: Runner mini_map");
     display.ds_win    = bunny_start(display.xmax, display.ymax,
-                                      false, "fl: Runner 3D");
-//display.ds_px     = bunny_new_pixelarray(display.xmax, display.ymax);
+                                    false, "fl: Runner 3D");
+    //display.ds_px     = bunny_new_pixelarray(display.xmax, display.ymax);
     display.ds_px   = bunny_new_pixelarray(display.xmax, display.ymax);
     display.player.x  = 5.5 * display.tile_size;
     display.player.y  = 0.5 * display.tile_size;
@@ -108,6 +107,7 @@ int main(void)
     blit_at_origin(&display);
     bunny_set_key_response(key_event);
     bunny_set_loop_main_function(loop);
+    draw_wall(&display);
     bunny_loop(display.ds_win, 30, &display);
     bunny_stop(display.ds_win);
     //bunny_loop(display.ds_win3d, 30, &display);

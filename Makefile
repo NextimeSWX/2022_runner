@@ -24,7 +24,8 @@ SRCS	=	src/runner.c		\
 		src/get_ratio.c		\
 		src/get_value.c		\
 		src/3d.c		\
-		src/fov.c
+		src/fov.c		\
+		src/draw.c
 
 OBJS	=	$(SRCS:.c=.o)
 
