@@ -16,7 +16,7 @@ t_bunny_position draw_3d_wall(struct display *ds,
     int i;
 
     i = 0;
-    while (i < resultat) {
+    while (i < resultat && pos.y >= 0 && pos.y <= ds->ymax) {
         put_pixel(&pos, ds->ds_px, color);
         pos.y += 1;
         i += 1;
@@ -32,7 +32,8 @@ t_bunny_position draw_floor(struct display *ds,
     int i;
 
     i = 0;
-    while (i < (ds->ymax / 2) - (resultat / 2)) {
+    while (i < (ds->ymax / 2) - (resultat / 2)
+           && pos.y >= 0 && pos.y <= ds->ymax) {
         put_pixel(&pos, ds->ds_px, color);
         pos.y += 1;
         i += 1;
@@ -44,7 +45,7 @@ void draw_3d(struct display *ds, float len, int xpos, double angle)
     float resultat;
     t_bunny_position pos;
 
-    resultat = ds->ymax * ds->tile_size /
+    resultat = ds->ymax * (ds->tile_size)/
         (len * cos((deg_to_rads(ds->angle)) - deg_to_rads(angle)));
     pos.x = xpos;
     pos.y = 0;

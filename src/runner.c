@@ -43,7 +43,9 @@ t_bunny_response loop(void *data)
     else {
         ds->walk = 2;
     }
-    draw(ds);
+    fov(ds);
+    draw_wall(ds);
+    send_ray_len(ds, ds->angle, RED);
     blit_at_origin(ds);
     return (GO_ON);
 }
@@ -107,7 +109,6 @@ int main(void)
     blit_at_origin(&display);
     bunny_set_key_response(key_event);
     bunny_set_loop_main_function(loop);
-    draw_wall(&display);
     bunny_loop(display.ds_win, 30, &display);
     bunny_stop(display.ds_win);
     //bunny_loop(display.ds_win3d, 30, &display);

@@ -8,16 +8,6 @@
 
 #include "stu.h"
 
-static void blit_at_origin(struct display *ds)
-{
-    t_bunny_position pos;
-
-    pos.x = 0;
-    pos.y = 0;
-    bunny_blit(&ds->ds_win->buffer, &ds->ds_px->clipable, &pos);
-    bunny_display(ds->ds_win);
-}
-
 int draw_wall(struct display *ds)
 {
     t_bunny_position drawpx;
@@ -25,21 +15,20 @@ int draw_wall(struct display *ds)
 
     wallpx.x = 0;
     wallpx.y = 0;
-    while (wallpx.y <= ds->ymax) {
-        while (wallpx.x <= ds->xmax) {
-            if (get_position(ds, wallpx) == 1 && drawpx.y < ds->ymax / 4)
+    while (wallpx.y < ds->ymax) {
+        while (wallpx.x < ds->xmax) {
+            if (get_position(ds, wallpx) == 1)
                 put_pixel(&drawpx, ds->ds_px, ds->wall);
-            else if (get_position(ds, wallpx) == 0 && drawpx.y < ds->ymax / 4)
+            else if (get_position(ds, wallpx) == 0)
                 put_pixel(&drawpx, ds->ds_px, ds->floor);
-            wallpx.x += 4;
-            drawpx.x += 1;
+            wallpx.x += 8;
+            drawpx.x += 2;
         }
         wallpx.x = 0;
         drawpx.x = 0;
-        wallpx.y += 4;
-        drawpx.y += 1;
+        wallpx.y += 8;
+        drawpx.y += 2;
     }
-    blit_at_origin(ds);
     return (0);
 }
 
