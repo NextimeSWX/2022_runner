@@ -31,5 +31,3 @@ int draw_wall(struct display *ds)
     }
     return (0);
 }
-
-

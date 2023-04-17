@@ -10,12 +10,17 @@
 
 t_bunny_position draw_3d_wall(struct display *ds,
                               t_bunny_position pos,
-                              float resultat,
-                              unsigned int color)
+                              float resultat)
 {
+    unsigned int color;
     int i;
 
     i = 0;
+    if (get_position(ds, pos) == 1 || get_position(ds, pos) == 0) {
+        color = ds->wall;
+    } else {
+        color = GREEN;
+    }
     while (i < resultat && pos.y >= 0 && pos.y <= ds->ymax) {
         put_pixel(&pos, ds->ds_px, color);
         pos.y += 1;
@@ -40,6 +45,7 @@ t_bunny_position draw_floor(struct display *ds,
     }
     return (pos);
 }
+
 void draw_3d(struct display *ds, float len, int xpos, double angle)
 {
     float resultat;
@@ -50,6 +56,6 @@ void draw_3d(struct display *ds, float len, int xpos, double angle)
     pos.x = xpos;
     pos.y = 0;
     pos = draw_floor(ds, pos, resultat, BLUE);
-    pos = draw_3d_wall(ds, pos, resultat, ds->wall);
+    pos = draw_3d_wall(ds, pos, resultat);
     draw_floor(ds, pos, resultat, ds->floor);
 }

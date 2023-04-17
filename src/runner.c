@@ -57,11 +57,12 @@ t_bunny_response key_event(t_bunny_event_state state,
     struct display *ds;
 
     ds = data;
+    (void) ds;
     if (state == GO_UP)
         return (GO_ON);
     if (keycode == BKS_ESCAPE)
         return (EXIT_ON_SUCCESS);
-    blit_at_origin(ds);
+
     return (GO_ON);
 }
 
@@ -96,21 +97,17 @@ int main(void)
     display.wall      = BLACK;
     display.pixel     = BLACK;
     display.walk      = 3;
-    //display.ds_win    = bunny_start(display.xmax, display.ymax,
-    //                                false, "fl: Runner mini_map");
+
     display.ds_win    = bunny_start(display.xmax, display.ymax,
                                     false, "fl: Runner 3D");
-    //display.ds_px     = bunny_new_pixelarray(display.xmax, display.ymax);
+
     display.ds_px   = bunny_new_pixelarray(display.xmax, display.ymax);
     display.player.x  = 5.5 * display.tile_size;
     display.player.y  = 0.5 * display.tile_size;
 
-    //draw_wall(&display);
     blit_at_origin(&display);
     bunny_set_key_response(key_event);
     bunny_set_loop_main_function(loop);
-    bunny_loop(display.ds_win, 30, &display);
+    bunny_loop(display.ds_win, 60, &display);
     bunny_stop(display.ds_win);
-    //bunny_loop(display.ds_win3d, 30, &display);
-    //bunny_stop(display.ds_win3d);
 }
