@@ -25,5 +25,5 @@ void d_key(struct display *ds)
     while (get_position(ds, tmp) == 1) {
         ds->player = move_forward(&ds->player, (rad - M_PI), 1);
         tmp = pos_from_accurate(&ds->player);
-    }
+        }
 }

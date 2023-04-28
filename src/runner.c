@@ -8,6 +8,16 @@
 
 #include "stu.h"
 
+int mxend[7 * 16] = {
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0,
+    0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0,
+    0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+    0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0,
+    0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+};
+
 void blit_at_origin(struct display *ds)
 {
     t_bunny_position pos;
@@ -19,6 +29,7 @@ void blit_at_origin(struct display *ds)
 }
 
 t_bunny_response loop(void *data)
+
 {
     struct display *ds;
     const bool *keys;
@@ -40,12 +51,9 @@ t_bunny_response loop(void *data)
         right_key(ds);
     if (keys[BKS_LSHIFT])
         ds->walk = 4;
-    else {
+    else
         ds->walk = 2;
-    }
-    fov(ds);
-    draw_wall(ds);
-    send_ray_len(ds, ds->angle, RED);
+    draw(ds, RED);
     blit_at_origin(ds);
     return (GO_ON);
 }
@@ -55,6 +63,7 @@ t_bunny_response key_event(t_bunny_event_state state,
                            void *data)
 {
     struct display *ds;
+    t_bunny_position tmp;
 
     ds = data;
     (void) ds;
@@ -62,49 +71,53 @@ t_bunny_response key_event(t_bunny_event_state state,
         return (GO_ON);
     if (keycode == BKS_ESCAPE)
         return (EXIT_ON_SUCCESS);
-
+    tmp = pos_from_accurate(&ds->player);
+    if (get_position(ds, tmp) == 2) {
+        ds->map = &mxend[0];
+        ds->width   = 16;
+        ds->height  = 7;
+        ds->xmax    = ds->width * ds->tile_size;
+        ds->ymax    = ds->height * ds->tile_size;
+        draw_wall(ds);
+    }
     return (GO_ON);
 }
+
+int mx[20 * 11] = {
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 0, 0, 1, 0, 0, 1, 0, 1 ,0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1,
+    1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1,
+    1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1,
+    1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1,
+    1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1,
+    1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1,
+    1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1,
+    1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 2, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+};
 
 int main(void)
 {
     struct display display;
 
-    int mx[20 * 11] = {
-        1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 0, 0, 1, 0, 0, 1, 1, 0 ,0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1,
-        1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1,
-        1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1,
-        1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1,
-        1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-        1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1,
-        1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1,
-        1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1,
-        1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    };
-
     display.map       = &mx[0];
     display.width     = 20;
     display.height    = 11;
     display.tile_size = 40;
-    display.angle     = 90;
+    display.angle     = 180;
     display.fov       = 70 / 2;
-
     display.xmax      = display.width * display.tile_size;
     display.ymax      = display.height * display.tile_size;
     display.floor     = WHITE;
     display.wall      = BLACK;
     display.pixel     = BLACK;
     display.walk      = 3;
-
     display.ds_win    = bunny_start(display.xmax, display.ymax,
                                     false, "fl: Runner 3D");
-
     display.ds_px   = bunny_new_pixelarray(display.xmax, display.ymax);
     display.player.x  = 5.5 * display.tile_size;
-    display.player.y  = 0.5 * display.tile_size;
-
+    display.player.y  = 1.5 * display.tile_size;
     blit_at_origin(&display);
     bunny_set_key_response(key_event);
     bunny_set_loop_main_function(loop);

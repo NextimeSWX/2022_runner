@@ -56,5 +56,6 @@ float get_ratio(int a, int b, int x);
 float get_value(int a, int b, float r);
 void fov(struct display *ds);
 void draw_3d(struct display *ds, float len, int xpos, double angle);
+void draw(struct display *ds, unsigned int color);
 
 #endif

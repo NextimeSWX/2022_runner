@@ -12,17 +12,11 @@ t_bunny_position draw_3d_wall(struct display *ds,
                               t_bunny_position pos,
                               float resultat)
 {
-    unsigned int color;
     int i;
 
     i = 0;
-    if (get_position(ds, pos) == 1 || get_position(ds, pos) == 0) {
-        color = ds->wall;
-    } else {
-        color = GREEN;
-    }
     while (i < resultat && pos.y >= 0 && pos.y <= ds->ymax) {
-        put_pixel(&pos, ds->ds_px, color);
+        put_pixel(&pos, ds->ds_px, ds->wall);
         pos.y += 1;
         i += 1;
     }

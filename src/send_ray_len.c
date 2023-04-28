@@ -23,7 +23,8 @@ void send_ray_len(struct display *ds,
     rad = deg_to_rads(deg);
     tmp = pos_from_accurate(&pos);
     while (get_position(ds, tmp) != 1
-           && pos.x < ds->xmax && pos.y < ds->ymax) {
+           && pos.x <= ds->xmax && pos.y <= ds->ymax
+           && pos.x >= 0 && pos.y >= 0) {
         tmp.x /= 4;
         tmp.y /= 4;
         pos = move_forward(&pos, rad, 1);

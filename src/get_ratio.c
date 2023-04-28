@@ -12,6 +12,6 @@ float get_ratio(int a, int b, int x)
 {
     float z;
 
-    z = (float)(x - a) / (b - a);
+    z = (float) (x - a) / (b - a);
     return (z);
 }
